@@ -31,7 +31,7 @@ public class InventoryExits {
     private String responsible;
 
     @Column(nullable = false)
-    private LocalDate dateEntries;
+    private LocalDate dateExits;
 
 
 }

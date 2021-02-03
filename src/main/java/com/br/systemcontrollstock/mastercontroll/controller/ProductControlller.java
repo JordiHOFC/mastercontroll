@@ -28,9 +28,24 @@ public class ProductControlller {
     public ProductResponseDTO findByBarcode(@PathVariable String barcode) throws ProductNotFoundException {
         return productService.findByBarcode(barcode);
     }
+    @GetMapping("/{id}")
+    public ProductResponseDTO findById(@PathVariable Long id) throws ProductNotFoundException {
+        return productService.findById(id);
+    }
 
     @GetMapping
     public List<ProductResponseDTO> findAll(){
         return productService.findAll();
+    }
+
+    @DeleteMapping("/{barcode}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String barcode) throws ProductNotFoundException {
+        productService.deleteByBarcode(barcode);
+    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) throws ProductNotFoundException {
+        productService.deleteById(id);
     }
 }

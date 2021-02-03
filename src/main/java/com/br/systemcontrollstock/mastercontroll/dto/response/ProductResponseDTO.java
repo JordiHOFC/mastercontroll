@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 
 public class ProductResponseDTO {
 
+    private Long id;
+
     private String name;
 
     private String barcode;
