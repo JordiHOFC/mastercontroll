@@ -1,10 +1,13 @@
 package com.br.systemcontrollstock.mastercontroll.controller;
 
 import com.br.systemcontrollstock.mastercontroll.dto.request.InventoryEntriesRequestDTO;
+import com.br.systemcontrollstock.mastercontroll.dto.request.InventoryExitsRequestDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.request.ProductRequestDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.response.InventoryEntriesResponseDTO;
+import com.br.systemcontrollstock.mastercontroll.dto.response.InventoryExitsResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.response.ProductResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.exception.ProductNotFoundException;
+import com.br.systemcontrollstock.mastercontroll.model.InventoryExits;
 import com.br.systemcontrollstock.mastercontroll.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,6 +57,11 @@ public class ProductControlller {
     @ResponseStatus(HttpStatus.CREATED)
     public InventoryEntriesResponseDTO entriesProductInventorie(@RequestBody @Valid InventoryEntriesRequestDTO product){
         return productService.entriesProduct(product);
+    }
+    @PostMapping("/exits")
+    @ResponseStatus(HttpStatus.CREATED)
+    public InventoryExitsResponseDTO exitsProductInventorie(@RequestBody @Valid InventoryExitsRequestDTO product){
+        return productService.exitsProduct(product);
     }
 
 }

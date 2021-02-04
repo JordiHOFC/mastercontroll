@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Data
@@ -16,15 +17,15 @@ import java.time.LocalDate;
 
 public class InventoryExitsRequestDTO {
 
-    @NotBlank(message = "product should be not blank")
+    @NotNull(message = "product should be not blank")
     private ProductDataDTO product;
 
-    @NotBlank(message = "quantity exits product should be not blank")
+    @NotNull(message = "quantity exits product should be not blank")
     private Long quantity;
 
     @NotBlank(message = "responsible exits product should be not blank")
     private String responsible;
 
-    @NotBlank(message = "date exits product should be not blank")
-    private LocalDate dateExits;
+    @NotNull(message = "date exits product should be not blank")
+    private String dateExits;
 }

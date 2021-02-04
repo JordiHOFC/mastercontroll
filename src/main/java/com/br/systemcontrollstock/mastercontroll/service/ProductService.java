@@ -1,15 +1,20 @@
 package com.br.systemcontrollstock.mastercontroll.service;
 
 import com.br.systemcontrollstock.mastercontroll.dto.request.InventoryEntriesRequestDTO;
+import com.br.systemcontrollstock.mastercontroll.dto.request.InventoryExitsRequestDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.request.ProductRequestDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.response.InventoryEntriesResponseDTO;
+import com.br.systemcontrollstock.mastercontroll.dto.response.InventoryExitsResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.response.ProductResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.exception.ProductNotFoundException;
 import com.br.systemcontrollstock.mastercontroll.mapper.InventoryEntriesMapper;
+import com.br.systemcontrollstock.mastercontroll.mapper.InventoryExitsMapper;
 import com.br.systemcontrollstock.mastercontroll.mapper.ProductMapper;
 import com.br.systemcontrollstock.mastercontroll.model.InventoryEntries;
+import com.br.systemcontrollstock.mastercontroll.model.InventoryExits;
 import com.br.systemcontrollstock.mastercontroll.model.Product;
 import com.br.systemcontrollstock.mastercontroll.repository.InventoryEntriesRepository;
+import com.br.systemcontrollstock.mastercontroll.repository.InventoryExitsRepository;
 import com.br.systemcontrollstock.mastercontroll.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +26,10 @@ public class ProductService {
 
     @Autowired
     private  ProductRepository productRepository;
+
+    @Autowired
+    private InventoryExitsRepository inventoryExitsRepository;
+
     @Autowired
     private InventoryEntriesRepository inventoryEntriesRepository;
 
@@ -29,6 +38,9 @@ public class ProductService {
 
     @Autowired
     private InventoryEntriesMapper inventoryEntriesMapper;
+
+    @Autowired
+    private InventoryExitsMapper inventoryExitsMapper;
 
 
     public ProductResponseDTO create(ProductRequestDTO productRequestDTO) {
@@ -39,17 +51,24 @@ public class ProductService {
     }
 
     public ProductResponseDTO findByBarcode(String barcode) throws ProductNotFoundException {
-        return productMapper.toResponse(verifyExistBarcode(barcode));
+        Product product=verifyExistBarcode(barcode);
+        product.setQuantity(productRepository.findQuantityByProduct(product.getProduct_id()));
+        return productMapper.toResponse(product);
     }
 
 
     public List<ProductResponseDTO> findAll() {
         List<Product> allProducts= productRepository.findAll();
+        for (Product product: allProducts) {
+            product.setQuantity(productRepository.findQuantityByProduct(product.getProduct_id()));
+        }
         return allProducts.stream().map(productMapper::toResponse).collect(Collectors.toList());
     }
 
     public ProductResponseDTO findById(Long id) throws ProductNotFoundException {
-        return productMapper.toResponse(verifyExistById(id));
+        Product product=verifyExistById(id);
+        product.setQuantity(productRepository.findQuantityByProduct(product.getProduct_id()));
+        return productMapper.toResponse(product);
     }
 
     private Product verifyExistById(Long id) throws ProductNotFoundException {
@@ -72,5 +91,11 @@ public class ProductService {
         InventoryEntries productIsSave=inventoryEntriesMapper.toModel(product);
         InventoryEntries productIsSaved=inventoryEntriesRepository.save(productIsSave);
         return inventoryEntriesMapper.toResponse(productIsSaved);
+    }
+
+    public InventoryExitsResponseDTO exitsProduct(InventoryExitsRequestDTO product) {
+        InventoryExits productIsExit= inventoryExitsMapper.toModel(product);
+        InventoryExits productExit= inventoryExitsRepository.save(productIsExit);
+        return inventoryExitsMapper.toResponse(productExit);
     }
 }
