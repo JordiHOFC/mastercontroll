@@ -1,6 +1,8 @@
 package com.br.systemcontrollstock.mastercontroll.controller;
 
+import com.br.systemcontrollstock.mastercontroll.dto.request.InventoryEntriesRequestDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.request.ProductRequestDTO;
+import com.br.systemcontrollstock.mastercontroll.dto.response.InventoryEntriesResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.response.ProductResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.exception.ProductNotFoundException;
 import com.br.systemcontrollstock.mastercontroll.service.ProductService;
@@ -48,4 +50,10 @@ public class ProductControlller {
     public void delete(@PathVariable Long id) throws ProductNotFoundException {
         productService.deleteById(id);
     }
+    @PostMapping("/entries")
+    @ResponseStatus(HttpStatus.CREATED)
+    public InventoryEntriesResponseDTO entriesProductInventorie(@RequestBody @Valid InventoryEntriesRequestDTO product){
+        return productService.entriesProduct(product);
+    }
+
 }

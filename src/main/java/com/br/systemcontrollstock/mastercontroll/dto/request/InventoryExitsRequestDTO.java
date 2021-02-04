@@ -20,7 +20,7 @@ public class InventoryExitsRequestDTO {
     private ProductDataDTO product;
 
     @NotBlank(message = "quantity exits product should be not blank")
-    private Integer quantity;
+    private Long quantity;
 
     @NotBlank(message = "responsible exits product should be not blank")
     private String responsible;

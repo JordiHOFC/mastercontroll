@@ -1,13 +1,17 @@
 package com.br.systemcontrollstock.mastercontroll.service;
 
+import com.br.systemcontrollstock.mastercontroll.dto.request.InventoryEntriesRequestDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.request.ProductRequestDTO;
+import com.br.systemcontrollstock.mastercontroll.dto.response.InventoryEntriesResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.dto.response.ProductResponseDTO;
 import com.br.systemcontrollstock.mastercontroll.exception.ProductNotFoundException;
+import com.br.systemcontrollstock.mastercontroll.mapper.InventoryEntriesMapper;
 import com.br.systemcontrollstock.mastercontroll.mapper.ProductMapper;
+import com.br.systemcontrollstock.mastercontroll.model.InventoryEntries;
 import com.br.systemcontrollstock.mastercontroll.model.Product;
+import com.br.systemcontrollstock.mastercontroll.repository.InventoryEntriesRepository;
 import com.br.systemcontrollstock.mastercontroll.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +21,14 @@ public class ProductService {
 
     @Autowired
     private  ProductRepository productRepository;
+    @Autowired
+    private InventoryEntriesRepository inventoryEntriesRepository;
 
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private InventoryEntriesMapper inventoryEntriesMapper;
 
 
     public ProductResponseDTO create(ProductRequestDTO productRequestDTO) {
@@ -57,5 +66,11 @@ public class ProductService {
     public void deleteById(Long id) throws ProductNotFoundException {
         productRepository.delete(verifyExistById(id));
 
+    }
+
+    public InventoryEntriesResponseDTO entriesProduct(InventoryEntriesRequestDTO product) {
+        InventoryEntries productIsSave=inventoryEntriesMapper.toModel(product);
+        InventoryEntries productIsSaved=inventoryEntriesRepository.save(productIsSave);
+        return inventoryEntriesMapper.toResponse(productIsSaved);
     }
 }

@@ -19,12 +19,12 @@ public class InventoryExits {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "InventoryExits")
-    @Column(nullable = false)
+    @JoinColumn(name="product_id", nullable = false)
+    @ManyToOne( fetch=FetchType.EAGER, targetEntity = Product.class)
     private Product product;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Long quantity;
 
 
     @Column(nullable = false)

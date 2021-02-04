@@ -19,15 +19,17 @@ public class InventoryEntries {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "InventoryEntries")
-    @Column(nullable = false)
+
+
+    @ManyToOne( fetch=FetchType.EAGER, targetEntity = Product.class)
+    @JoinColumn(name="product_id", nullable = false)
     private Product product;
 
     @Column(unique = true,nullable = false)
     private String numberInvoice;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Long quantity;
 
     @Column(nullable = false)
     private Double unitaryValue;

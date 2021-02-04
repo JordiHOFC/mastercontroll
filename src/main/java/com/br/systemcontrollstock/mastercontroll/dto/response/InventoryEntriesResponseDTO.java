@@ -24,7 +24,7 @@ public class InventoryEntriesResponseDTO {
     private String numberInvoice;
 
 
-    private Integer quantity;
+    private Long quantity;
 
 
     private Double unitaryValue;

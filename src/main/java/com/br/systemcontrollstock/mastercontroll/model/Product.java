@@ -16,25 +16,28 @@ import javax.persistence.*;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long product_id;
 
-    @Column(unique = true, nullable = false)
+    @Column
     private String name;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String barcode;
 
-    @Column(nullable = false)
+    @Column(name ="description")
     private String description;
 
-    @Column(name="minimum_quanty", nullable = false)
-    private int minimumQuanty;
+    @Column(name="minimum_quanty",nullable = false)
+    private Long minimumQuanty;
 
-    @Column(name="maximum_quanty", nullable = false)
-    private int maximumQuanty;
+    @Column(name="maximum_quanty",nullable = false)
+    private Long maximumQuanty;
 
     @Column(name="safety_quanty",nullable = false)
-    private int safetyQuanty;
+    private Long safetyQuanty;
+
+    @Transient
+    private Integer quantity;
 
 
 

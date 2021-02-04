@@ -1,20 +1,26 @@
 package com.br.systemcontrollstock.mastercontroll.dto.response;
 
-import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductResponseDTO {
 
-    private Long id;
+    private Long product_id;
 
     private String name;
 
     private String barcode;
 
-    private Integer maximumQuanty;
+    private Long maximumQuanty;
 
-    private Integer minimumQuanty;
+    private Long minimumQuanty;
 
-    private Integer safetyQuanty;
+    private Long safetyQuanty;
 
-    private Integer quantity;
+    private Long quantity;
 }
